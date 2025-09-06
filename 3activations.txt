@@ -1,0 +1,12 @@
+testCases_0_0 = 0.0
+testCases_0_1 = 0.0
+testCases_0_2 = 0.0
+testCases_1_0 = 0.0
+testCases_1_1 = 1.0
+testCases_1_2 = 0.0
+testCases_2_0 = 1.0
+testCases_2_1 = 0.0
+testCases_2_2 = 0.0
+testCases_3_0 = 1.0
+testCases_3_1 = 1.0
+testCases_3_2 = 1.0

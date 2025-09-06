@@ -1,0 +1,23 @@
+numTestCases = 4
+defaultWeightVal = 0.5
+netConfig = 2-1-1
+
+errorThreshold = 0.0002
+averageError = 0.0
+maxIters = 100000
+
+lambda = 0.3
+keepAlive = 0
+randomMinThreshold = 0.1
+randomMaxThreshold = 1.5
+willTrain = true
+useRandomWeights = true
+willSaveWeights = true
+useLoadedWeights = false
+weightsFileName = weights.txt
+tCaseActivationFileName = 2activations.txt
+
+targetOutput_0_0 = 0.0
+targetOutput_1_0 = 1.0
+targetOutput_2_0 = 1.0
+targetOutput_3_0 = 0.0
