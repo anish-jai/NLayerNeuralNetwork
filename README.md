@@ -1,4 +1,4 @@
-# Finger Detection Neural Network
+# Fully Configurable N-Layer Neural Network
 
 ## Overview
 A configurable multi-layer neural network implementation for image classification tasks, featuring both training and inference capabilities with backpropagation optimization.
