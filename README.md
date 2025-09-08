@@ -1,45 +1,20 @@
-# N-Layer Image Processing Neural Network
-
-A configurable multi-layer neural network implementation for image classification tasks, featuring both training and inference capabilities with backpropagation optimization.
+# Finger Detection Neural Network
 
 ## Overview
+A configurable multi-layer neural network implementation for image classification tasks, featuring both training and inference capabilities with backpropagation optimization.
+One main application/configuration detects the number of fingers (1-5) someone is holding up in hand gesture images.
 
-This project implements a flexible N-layer neural network designed for image processing and classification. The system consists of:
-
-- **Java Neural Network** (`NLayer.java`): Core implementation with configurable architecture
-- **Python Image Preprocessor** (`WOOHOO.py`): Image preprocessing pipeline for neural network input
-- **Configuration System**: Flexible configuration files for different network architectures
-- **Training Data**: Preprocessed image data represented as normalized pixel values
-
-## Architecture
-
-### Neural Network Features
-- **Configurable Architecture**: Support for any number of layers and nodes per layer
-- **Sigmoid Activation**: Uses sigmoid activation function with derivative support
-- **Backpropagation Training**: Gradient descent optimization with configurable learning rate
-- **Weight Management**: Random initialization, manual setting, or loading from saved weights
-- **Error Monitoring**: Configurable error thresholds and iteration limits
-
-### Current Configuration
-The main configuration (`ImageProcessingConfig.txt`) defines a network with:
-- **Input Layer**: 13,000 nodes (representing flattened image data)
-- **Hidden Layers**: 25 → 5 → 5 nodes
-- **Output Layer**: 5 nodes (classification categories)
-- **Network Topology**: 13000-25-5-5
+### Key Features
+- **Finger Recognition**: Classifies hand gestures into 5 categories (1-5 fingers)
+- **Training Mode**: Trains from scratch with random weights on 25 training cases
+- **Inference Mode**: Uses trained weights to classify new images (6th set of test cases)
+- **Configurable Architecture**: 13,000 input nodes → 25 → 5 → 5 output nodes
+- **Backpropagation Training**: Optimizes weights using gradient descent
 
 ## Files Structure
 
 ### Core Implementation
 - `NLayer.java` - Main neural network implementation
-- `NLayer.class` - Compiled Java bytecode
-- `NLayer.java.zip` - Backup of source code
-
-### Image Preprocessing
-- `WOOHOO.py` - Python script for image preprocessing
-  - Converts images to grayscale
-  - Removes background using AI-based segmentation
-  - Centers and crops images to fixed size
-  - Outputs 120×100 pixel images as BMP format
 
 ### Configuration Files
 - `ImageProcessingConfig.txt` - Main network configuration
@@ -47,81 +22,73 @@ The main configuration (`ImageProcessingConfig.txt`) defines a network with:
 - `config3N3.txt` - Alternative 2-1-1-3 network configuration
 
 ### Training Data
-- `TestCases/` - Directory containing preprocessed image data files
-  - `{1-6}-{1-5}.txt` - Individual test case files (13,000 normalized pixel values per file)
-  - Files organized by category and sample number (e.g., `1-1.txt`, `1-2.txt`, etc.)
-- `2activations.txt`, `3activations.txt` - Test case configurations for smaller networks
-- `weights.txt` - Saved neural network weights
+- `TestCases/` - Directory containing finger gesture image data
+  - `{1-5}-{1-5}.txt` - Training cases: 5 sets of 5 images each for fingers 1-5
+  - `6-{1-5}.txt` - Test cases: 6th set used for inference mode
+  - Each file contains 13,000 normalized pixel values (120×100 + padding)
+- `weights.txt` - Saved neural network weights after training
 
-## Configuration Parameters
+### Image Preprocessing (To Test Your Own Images)
+- `WOOHOO.py` - Python script for image preprocessing
+  - Converts images to grayscale
+  - Removes background using AI-based segmentation
+  - Centers and crops images to fixed size
+  - Outputs 120×100 pixel images as BMP format
 
-| Parameter | Description |
-|-----------|-------------|
-| `netConfig` | Network architecture (e.g., "13000-25-5-5") |
-| `numTestCases` | Number of training/test images |
-| `errorThreshold` | Training stops when error drops below this value |
-| `maxIters` | Maximum training iterations |
-| `lambda` | Learning rate for backpropagation |
-| `willTrain` | Enable/disable training mode |
-| `useRandomWeights` | Initialize weights randomly |
-| `useLoadedWeights` | Load weights from file |
-| `willSaveWeights` | Save weights after training |
+## Training vs Inference Modes
+
+### Training Mode (Default)
+- **Purpose**: Train the network to recognize finger counts
+- **Data Used**: 25 training cases (sets 1-5, all 5 images per finger count)
+- **Configuration**: 
+  - `willTrain = true`
+  - `useRandomWeights = true` 
+  - `useLoadedWeights = false`
+- **Output**: Saves optimized weights to `weights.txt`
+
+### Inference Mode 
+- **Purpose**: Use trained network to classify new finger images
+- **Data Used**: 5 test cases from set 6 (`6-1.txt` through `6-5.txt`)
+- **Configuration Changes Required**:
+  - `willTrain = false`
+  - `useRandomWeights = false`
+  - `useLoadedWeights = true`
 
 ## Usage
 
-### Quick Start Commands
+### Quick Start
 
-#### Run Inference (Recommended First Step)
+#### Step 1: Train the Network (Default)
 ```bash
-java NLayer ImageProcessingConfig.txt
+java NLayer
 ```
-This runs the pre-trained network with the default configuration (willTrain = false).
+By default, the system trains on 25 finger gesture images with random weights until the error threshold is reached, then saves weights to `weights.txt`.
 
-#### Train a New Model
+#### Step 2: Switch to Inference Mode
+To use the trained network to classify new finger images:
+
+1. Edit `ImageProcessingConfig.txt`:
+   - Change `willTrain = false`
+   - Change `useRandomWeights = false` 
+   - Change `useLoadedWeights = true`
+
+2. Run inference:
 ```bash
-# First, modify ImageProcessingConfig.txt to set willTrain = true
-java NLayer ImageProcessingConfig.txt
+java NLayer
 ```
 
-#### Alternative Configurations
-```bash
-# Run smaller test networks
-java NLayer config2N1.txt      # 2-1-1 network
-java NLayer config3N3.txt      # 2-1-1-3 network
-```
+This will test the network on the 6th set of finger images and show classification results.
 
-#### Image Preprocessing
-```bash
-python WOOHOO.py
-```
-Processes `one v6.JPG` and outputs normalized pixel data suitable for neural network input.
-
-### Detailed Usage Instructions
-
-#### Training a New Model
-1. Configure network parameters in `ImageProcessingConfig.txt` (default test case file is 1-1.txt)
-2. Set `willTrain = true`
-3. Run: `java NLayer ImageProcessingConfig.txt`
-
-#### Running Inference
-1. Set `willTrain = false` in configuration (default setting)
-2. Ensure weights are loaded (`useLoadedWeights = true`)
-3. Run: `java NLayer ImageProcessingConfig.txt`
-
-## Data Format
-
-- **Image Data**: Each `TestCases/{n}-{m}.txt` file contains 13,000 space-separated normalized pixel values (0.0-1.0)
-- **Target Outputs**: One-hot encoded classifications in configuration file
-- **Weights**: Space-separated floating-point values organized by layer
+You can configure the network for any other tasks as you'd like.
 
 ## Output Classification
 
-Based on the target outputs in the configuration, the network classifies images into 5 categories:
-- Category 1: `targetOutput_*_0 = 1.0`
-- Category 2: `targetOutput_*_1 = 1.0`  
-- Category 3: `targetOutput_*_2 = 1.0`
-- Category 4: `targetOutput_*_3 = 1.0`
-- Category 5: `targetOutput_*_4 = 1.0`
+The network classifies finger gestures into 5 categories:
+- **1 Finger**: Cases 0-4 (files `1-*.txt`) → Output `[1,0,0,0,0]`
+- **2 Fingers**: Cases 5-9 (files `2-*.txt`) → Output `[0,1,0,0,0]`  
+- **3 Fingers**: Cases 10-14 (files `3-*.txt`) → Output `[0,0,1,0,0]`
+- **4 Fingers**: Cases 15-19 (files `4-*.txt`) → Output `[0,0,0,1,0]`
+- **5 Fingers**: Cases 20-24 (files `5-*.txt`) → Output `[0,0,0,0,1]`
 
 ## Dependencies
 
@@ -129,7 +96,7 @@ Based on the target outputs in the configuration, the network classifies images 
 - JDK 8 or higher
 - Standard Java libraries (Properties, IO)
 
-### Python
+### Python (optional)
 - NumPy
 - PIL (Python Imaging Library)
 - SciPy

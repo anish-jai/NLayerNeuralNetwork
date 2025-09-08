@@ -1,4 +1,4 @@
-numTestCases = 5
+numTestCases = 25
 runningNum = 6
 defaultWeightVal = 0.5
 netConfig = 13000-25-5-5
@@ -11,12 +11,12 @@ lambda = 0.3
 keepAlive = 100
 randomMinThreshold = -0.1
 randomMaxThreshold = 0.1
-willTrain = false
-useRandomWeights = false
+willTrain = true
+useRandomWeights = true
 willSaveWeights = true
-useLoadedWeights = true
+useLoadedWeights = false
 weightsFileName = weights.txt
-tCaseActivationFileName = 1-1.txt
+tCaseActivationFileName = 5-2.txt
 
 targetOutput_0_0 = 1.0
 targetOutput_0_1 = 0.0

@@ -363,7 +363,7 @@ public static int secondMaxArrayDim()
             for (tCaseIter = 0; tCaseIter < numTestCases; tCaseIter++) 
             {
                tCaseActivationFileName = "TestCases/" + (tCaseIter % 5 + 1) + "-" + (tCaseIter / (numTestCases / 5) + 1) + ".txt";
-               // System.out.println(tCaseActivationFileName);
+               // System.out.println("Getting activations from " + tCaseActivationFileName);
                testActivations = new BufferedReader(new FileReader(tCaseActivationFileName));
                line = testActivations.readLine();
                values = line.trim().split("\\s+");
@@ -378,7 +378,7 @@ public static int secondMaxArrayDim()
          }
          else
          {
-            for (tCaseIter = 0; tCaseIter < numTestCases; tCaseIter++) 
+            for (tCaseIter = 0; tCaseIter < numTestCases/5; tCaseIter++) 
             {
                tCaseActivationFileName = "TestCases/" + runningNum + "-" + (tCaseIter + 1) + ".txt";
                // System.out.println(tCaseActivationFileName);
@@ -664,8 +664,7 @@ public static int secondMaxArrayDim()
       
       for (i = 0; i < nLayers[outLayer]; i++)
       {
-         // System.out.print(ANSI_BOLD + "         F#" + (i+1)+  "         |" + ANSI_RESET);
-         // System.out.print(ANSI_BOLD + "  F#" + (i+1)+  "  |" + ANSI_RESET);
+         System.out.print(ANSI_BOLD + "  F#" + (i+1)+  "  |" + ANSI_RESET);
       }
       
       for (tCaseIter = 0; tCaseIter < numTestCases; tCaseIter++)
@@ -676,11 +675,11 @@ public static int secondMaxArrayDim()
          //    System.out.print(" " + testCases[tCaseIter][m] + " |");
          // }
 
-         // for (i = 0; i < nLayers[outLayer]; i++) 
-         // {
-         //    System.out.printf(" %.3f", targetOutput[tCaseIter][i]);
-         //    System.out.print(" |");
-         // }
+         for (i = 0; i < nLayers[outLayer]; i++) 
+         {
+            System.out.printf(" %.3f", targetOutput[tCaseIter][i]);
+            System.out.print(" |");
+         }
 
          for (i = 0; i < nLayers[outLayer]; i++)
          {
